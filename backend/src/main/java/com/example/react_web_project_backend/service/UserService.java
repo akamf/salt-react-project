@@ -1,7 +1,7 @@
-package com.example.react_web_project_backend.repository;
+package com.example.react_web_project_backend.service;
 
 import com.example.react_web_project_backend.model.User;
-import com.example.react_web_project_backend.service.UserRepository;
+import com.example.react_web_project_backend.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

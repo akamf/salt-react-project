@@ -1,4 +1,4 @@
-package com.example.react_web_project_backend.service;
+package com.example.react_web_project_backend.repository;
 
 
 import com.example.react_web_project_backend.model.User;
