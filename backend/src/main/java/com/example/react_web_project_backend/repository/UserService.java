@@ -26,12 +26,17 @@ public class UserService {
     }
 
     public User addUser(String name, String password) {
+        if (userRepository.existsByName(name)) {
+            throw new IllegalArgumentException("User with name already exists");
+        }
+
         UUID id = UUID.randomUUID();
         User user = new User(id, name, password, new HashMap<>());
         return userRepository.save(user);
     }
 
     public boolean deleteUser(UUID id) {
+        if (!userRepository.existsById(id)) return false;
         return userRepository.deleteUser(id);
     }
 }

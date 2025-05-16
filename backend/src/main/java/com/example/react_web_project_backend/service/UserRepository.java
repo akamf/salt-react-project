@@ -27,4 +27,11 @@ public class UserRepository {
         return usersDB.remove(id) != null;
     }
 
+    public boolean existsById(UUID id) {
+        return usersDB.containsKey(id);
+    }
+
+    public boolean existsByName(String name) {
+        return usersDB.values().stream().anyMatch(user -> user.name().equalsIgnoreCase(name));
+    }
 }

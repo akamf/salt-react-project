@@ -32,8 +32,13 @@ public class UserController {
     }
 
     @PostMapping("/add-user")
-    public User addUser(@RequestParam String name, @RequestParam String password) {
-        return userService.addUser(name, password);
+    public ResponseEntity<?> addUser(@RequestParam String name, @RequestParam String password) {
+        try {
+            User created = userService.addUser(name, password);
+            return ResponseEntity.ok(created);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(409).body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/delete-user/{id}")
