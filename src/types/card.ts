@@ -4,3 +4,10 @@ export interface PlayingCard {
   value: string
   suit: string
 };
+
+export enum CardValue {
+  ACE = 'ACE',
+  JACK = 'JACK',
+  QUEEN = 'QUEEN',
+  KING = 'KING',
+};

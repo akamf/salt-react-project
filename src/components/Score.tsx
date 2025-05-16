@@ -1,5 +1,5 @@
 import { PlayingCard } from "../types/card";
-import { calculateHandValue } from "../utils";
+import { calculateHandValue } from "../utils/blackjack";
 
 interface ScoreProps {
   cards: PlayingCard[];

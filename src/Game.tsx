@@ -2,9 +2,9 @@ import { ReactElement, useState } from "react";
 
 import Controls from "./components/Controls";
 import Hand from "./components/Hand";
-import { GameStatus } from "./types/game";
+import { GameStatus } from "./types/blackjack";
 import { PlayingCard } from "./types/card";
-import { calculateHandValue } from "./utils";
+import { calculateHandValue } from "./utils/blackjack";
 import Status from "./components/Status";
 import Score from "./components/Score";
 

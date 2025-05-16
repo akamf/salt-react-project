@@ -1,11 +1,11 @@
-import { PlayingCard } from "./types/card";
+import { CardValue, PlayingCard } from "../types/card";
 
 export const calculateHandValue = (cards: PlayingCard[]): number => {
     let total: number = 0;
     let aces: number = 0;
 
     for (const card of cards) {
-        if (['KING', 'QUEEN', 'JACK'].includes(card.value)) {
+        if ([CardValue.KING, CardValue.QUEEN, CardValue.JACK].includes(card.value as CardValue)) {
             total += 10;
         } else if (card.value === 'ACE') {
             total += 11;
@@ -22,4 +22,5 @@ export const calculateHandValue = (cards: PlayingCard[]): number => {
     }
 
     return total;
-}
+};
+
