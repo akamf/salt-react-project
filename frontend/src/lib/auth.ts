@@ -1,10 +1,17 @@
-export type User = {
-  id: string
-  name: string
+export type UserDto = {
+  id: string;
+  name: string;
+  gameStats: Record<string, {
+    wins: number;
+    losses: number;
+    ties: number;
+    extraStats: Record<string, number>;
+  }>;
+  token: string;
 };
 
 export type AuthContext = {
-  user: User | null
+  user: UserDto | null
   login: (name: string) => void
   logout: () => void
 };

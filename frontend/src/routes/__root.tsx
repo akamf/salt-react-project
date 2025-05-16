@@ -1,12 +1,12 @@
 import { createRootRouteWithContext, Link, Outlet } from '@tanstack/react-router';
 import { useState } from 'react';
 import { v4 as uuid } from 'uuid'
-import { AuthContext, User } from '../lib/auth';
+import { AuthContext, UserDto } from '../lib/auth';
 
 const RootComponent = () => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserDto | null>(null);
 
-  const login = (name: string) => setUser({id: uuid(), name });
+  const login = (user: UserDto) => setUser(user);
   const logout = () => setUser(null);
 
   return (
