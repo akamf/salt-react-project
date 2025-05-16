@@ -1,5 +1,5 @@
 import { useRouteContext } from '@tanstack/react-router'
-import type { AuthContext } from '../lib/auth'
+import type { AuthContext } from '../utils/auth'
 
 export function useAuth(): AuthContext {
   return useRouteContext({ from: '__root__' });

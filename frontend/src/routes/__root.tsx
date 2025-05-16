@@ -1,5 +1,5 @@
 import { createRootRouteWithContext, Link, Outlet, useRouteContext } from '@tanstack/react-router'
-import type { AuthContext } from '../lib/auth'
+import type { AuthContext } from '../utils/auth'
 
 const RootComponent = () => {
   const { user, logout } = useRouteContext({ from: '__root__' })

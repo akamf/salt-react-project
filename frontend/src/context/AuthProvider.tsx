@@ -1,7 +1,7 @@
 import React from 'react'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { routeTree } from '../routeTree.gen'
-import { UserDto, AuthContext } from '../lib/auth'
+import { UserDto, AuthContext } from '../utils/auth'
 
 const router = createRouter({ routeTree })
 
