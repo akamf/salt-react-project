@@ -1,6 +1,8 @@
 package com.example.react_web_project_backend.contoller;
 
 
+import com.example.react_web_project_backend.dto.UserDto;
+import com.example.react_web_project_backend.exception.InvalidCredentialsException;
 import com.example.react_web_project_backend.model.User;
 import com.example.react_web_project_backend.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +40,16 @@ public class UserController {
             return ResponseEntity.ok(created);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(409).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestParam String name, @RequestParam String password) {
+        try {
+            UserDto user = userService.login(name, password);
+            return ResponseEntity.ok(user);
+        } catch (InvalidCredentialsException e) {
+            return ResponseEntity.status(401).body(e.getMessage());
         }
     }
 

@@ -34,4 +34,10 @@ public class UserRepository {
     public boolean existsByName(String name) {
         return usersDB.values().stream().anyMatch(user -> user.name().equalsIgnoreCase(name));
     }
+    public Optional<User> findByName(String name) {
+        return usersDB.values().stream()
+                .filter(user -> user.name().equalsIgnoreCase(name))
+                .findFirst();
+    }
+
 }

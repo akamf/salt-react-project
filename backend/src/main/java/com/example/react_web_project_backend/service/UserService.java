@@ -1,5 +1,7 @@
 package com.example.react_web_project_backend.service;
 
+import com.example.react_web_project_backend.dto.UserDto;
+import com.example.react_web_project_backend.exception.InvalidCredentialsException;
 import com.example.react_web_project_backend.model.User;
 import com.example.react_web_project_backend.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -38,5 +40,17 @@ public class UserService {
     public boolean deleteUser(UUID id) {
         if (!userRepository.existsById(id)) return false;
         return userRepository.deleteUser(id);
+    }
+
+    public UserDto login(String name, String password) {
+        return userRepository.findByName(name)
+                .map(user -> {
+                    if (!user.password().equals(password)) {
+                        throw new InvalidCredentialsException("Wrong password");
+                    }
+                    String token = UUID.randomUUID().toString();
+                    return new UserDto(user.id(), user.name(), user.gameStats(), token);
+                })
+                .orElseThrow(() -> new InvalidCredentialsException("User not found"));
     }
 }
