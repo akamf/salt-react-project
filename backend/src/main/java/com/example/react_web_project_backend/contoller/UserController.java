@@ -1,10 +1,13 @@
 package com.example.react_web_project_backend.contoller;
 
 
+import com.example.react_web_project_backend.dto.GameStatsUpdateDto;
 import com.example.react_web_project_backend.dto.UserDto;
 import com.example.react_web_project_backend.exception.InvalidCredentialsException;
 import com.example.react_web_project_backend.model.User;
 import com.example.react_web_project_backend.service.UserService;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,5 +59,15 @@ public class UserController {
     @DeleteMapping("/delete-user/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
         return userService.deleteUser(id) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/users/{id}")
+    public ResponseEntity<?> updateUserStats(@PathVariable UUID id, @RequestBody GameStatsUpdateDto update) {
+        try {
+            userService.updateStats(id, update);
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 }
