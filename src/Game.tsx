@@ -4,7 +4,7 @@ import Controls from "./components/Controls";
 import Hand from "./components/Hand";
 import { GameStatus } from "./types/blackjack";
 import { PlayingCard } from "./types/card";
-import { calculateHandValue } from "./utils/blackjack";
+import { calculateHandValue, determineWinner, isBlackjack, isBust } from "./utils/blackjack";
 import Status from "./components/Status";
 import Score from "./components/Score";
 
@@ -26,11 +26,10 @@ const Game = (): ReactElement => {
       const drawData = await drawResponse.json();
       const cards = drawData.cards;
 
-      const playerScore: number = calculateHandValue([cards[0], cards[2]]);
       setPlayerCards([cards[0], cards[2]]);
       setDealerCards([cards[1], cards[3]]);
 
-      if (playerScore === 21) {
+      if (isBlackjack([cards[0], cards[2]])) {
         setGameStatus(GameStatus.Blackjack);
         return;
       }
@@ -52,10 +51,8 @@ const Game = (): ReactElement => {
       const updatedHand = [...playerCards, newCard];
       setPlayerCards(updatedHand);
 
-      const playerScore: number = calculateHandValue(updatedHand);
-      if (playerScore > 21) {
-        setGameStatus(GameStatus.Lose);
-      }
+      if (isBust(updatedHand)) setGameStatus(GameStatus.Lose);
+
     } catch (error) {
       console.error('Failed to draw card:', error);
     }
@@ -74,15 +71,7 @@ const Game = (): ReactElement => {
     }
 
     setDealerCards(dealer);
-
-    const playerScore: number = calculateHandValue(playerCards);
-    const dealerScore: number = calculateHandValue(dealer);
-
-    if (playerScore > 21) setGameStatus(GameStatus.Lose);
-    else if (dealerScore > 21) setGameStatus(GameStatus.Win);
-    else if (playerScore > dealerScore) setGameStatus(GameStatus.Win);
-    else if (playerScore < dealerScore) setGameStatus(GameStatus.Lose);
-    else setGameStatus(GameStatus.Tie);
+    setGameStatus(determineWinner(playerCards, dealer));
   }
   
 
