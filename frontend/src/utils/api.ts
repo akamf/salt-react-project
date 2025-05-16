@@ -7,7 +7,7 @@ export const getApiUrl = (): string => {
 };
 
 export const loginUser = async (name: string, password: string) => {
-  const API_URL = getApiUrl()
+  const API_URL = getApiUrl();
 
   const response = await fetch(`${API_URL}/login?name=${name}&password=${password}`, {
     method: "POST",
@@ -16,6 +16,23 @@ export const loginUser = async (name: string, password: string) => {
   if (!response.ok) {
     const message = await response.text();
     throw new Error(message || "Login failed");
+  }
+
+  return await response.json();
+};
+
+export const addUser = async (name: string, password: string) => {
+  const API_URL = getApiUrl();
+
+  const response = await fetch(`${API_URL}/add-user`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, password }),
+  });
+
+  if (!response.ok) {
+    const message = await response.text();
+    throw new Error(message || "Registration failed");
   }
 
   return await response.json();
