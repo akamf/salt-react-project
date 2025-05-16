@@ -1,8 +1,14 @@
-import { createRootRouteWithContext, Link, Outlet, useRouteContext } from '@tanstack/react-router'
+import { createRootRouteWithContext, Link, Outlet, useNavigate, useRouteContext } from '@tanstack/react-router'
 import type { AuthContext } from '../utils/auth'
 
 const RootComponent = () => {
-  const { user, logout } = useRouteContext({ from: '__root__' })
+  const navigate = useNavigate();
+  const { user, logout } = useRouteContext({ from: '__root__' });
+
+  const handleLogout = () => {
+    logout();
+    navigate({ to: '/' });
+  }
 
   return (
     <div className="w-full min-h-screen bg-gradient-to-b from-green-600 to-green-900 text-white font-mono">
@@ -20,7 +26,7 @@ const RootComponent = () => {
           {!user ? (
             <Link to="/login">Log In</Link>
           ) : (
-            <button onClick={logout} className="ml-4 underline">Log Out</button>
+            <button onClick={handleLogout} className="ml-4 underline">Log Out</button>
           )}
         </nav>
       </header>

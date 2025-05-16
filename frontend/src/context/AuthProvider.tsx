@@ -3,7 +3,7 @@ import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { routeTree } from '../routeTree.gen'
 import { UserDto, AuthContext } from '../utils/auth'
 
-const router = createRouter({ routeTree })
+const router = createRouter({ routeTree });
 
 declare module '@tanstack/react-router' {
   interface Register {
@@ -27,7 +27,9 @@ const AuthProvider = () => {
   React.useEffect(() => {
     const stored = localStorage.getItem('user');
     
-    if (stored) setUser(JSON.parse(stored));
+    if (stored) {
+      setUser(JSON.parse(stored));
+    }
   }, [])
 
   const context: AuthContext = { user, login, logout };
