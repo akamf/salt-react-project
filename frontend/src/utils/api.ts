@@ -1,14 +1,14 @@
-export const getApiUrl = (): string => {
-  const url = import.meta.env.VITE_API_URL
+const getApiUrl = (): string => {
+  const url = import.meta.env.VITE_API_URL;
   if (!url) {
-    throw new Error("Missing VITE_API_URL in environment")
+    throw new Error("Missing VITE_API_URL in environment");
   }
-  return url
+  return url;
 };
 
-export const loginUser = async (name: string, password: string) => {
-  const API_URL = getApiUrl();
+const API_URL = getApiUrl();
 
+export const loginUser = async (name: string, password: string) => {
   const response = await fetch(`${API_URL}/login?name=${name}&password=${password}`, {
     method: "POST",
   });
@@ -22,8 +22,6 @@ export const loginUser = async (name: string, password: string) => {
 };
 
 export const addUser = async (name: string, password: string) => {
-  const API_URL = getApiUrl();
-
   const response = await fetch(`${API_URL}/add-user`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -36,4 +34,20 @@ export const addUser = async (name: string, password: string) => {
   }
 
   return await response.json();
+};
+
+export const updateStats = async (
+  userId: string,
+  game: string,
+  outcome: 'win' | 'loss' | 'blackjack' | 'tie'
+) => {
+  const response = await fetch(`${API_URL}/users/${userId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ game, outcome }),
+  });
+
+  if (!response.ok) {
+    throw new Error(await response.text());
+  }
 };
