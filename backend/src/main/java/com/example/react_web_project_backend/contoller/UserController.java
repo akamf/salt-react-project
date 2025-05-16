@@ -1,0 +1,41 @@
+package com.example.react_web_project_backend.contoller;
+
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
+
+@RestController
+@RequestMapping("/api")
+@CrossOrigin
+public class UserController {
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping("/users")
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
+    }
+
+    @GetMapping("/users/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable UUID id) {
+        return userService.getUserById(id)
+                .map(ResponseEntity.ok())
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/add-user")
+    public User addUser(@RequestParam String name, @RequestParam String password) {
+        return userService.addUser(name, password);
+    }
+
+    @DeleteMapping("/delete-user/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
+        return userService.deleteUser(id) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+    }
+}
