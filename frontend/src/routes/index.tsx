@@ -21,7 +21,7 @@ const Index = () => {
           >
             View Games
           </Link>
-                    <Link
+            <Link
               to="/profile"
               className="px-6 py-3 bg-zinc-800 hover:bg-zinc-700 rounded text-white text-lg"
             >
