@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import BlackJack from "../../games/blackjack/Game";
 
 const BlackJackPage = () => {
@@ -13,5 +13,13 @@ const BlackJackPage = () => {
 }
 
 export const Route = createFileRoute('/games/blackjack')({
+  beforeLoad: ({ context }) => {
+      if (!context.user) {
+        throw redirect({
+          to: '/login',
+          search: { redirect: '/profile' },
+        })
+      }
+    },
   component: BlackJackPage,
 })
