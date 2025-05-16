@@ -1,6 +1,7 @@
 package com.example.react_web_project_backend.contoller;
 
 
+import com.example.react_web_project_backend.model.User;
 import com.example.react_web_project_backend.repository.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class UserController {
     @GetMapping("/users/{id}")
     public ResponseEntity<User> getUserById(@PathVariable UUID id) {
         return userService.getUserById(id)
-                .map(ResponseEntity.ok())
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
