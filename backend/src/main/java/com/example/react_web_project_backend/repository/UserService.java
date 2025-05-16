@@ -1,7 +1,7 @@
 package com.example.react_web_project_backend.repository;
 
-import com.example.react_web_project_backend.model.GameStats;
 import com.example.react_web_project_backend.model.User;
+import com.example.react_web_project_backend.service.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -22,7 +22,7 @@ public class UserService {
     }
 
     public Optional<User> getUserById(UUID id) {
-        return userRepository.findbyId(id);
+        return userRepository.findById(id);
     }
 
     public User addUser(String name, String password) {
