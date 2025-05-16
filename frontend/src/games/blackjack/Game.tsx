@@ -2,14 +2,15 @@ import { ReactElement, useState } from "react";
 
 import Controls from "./components/Controls";
 import Hand from "./components/Hand";
-import { GameStatus } from "./types/blackjack";
-import { PlayingCard } from "./types/card";
-import { calculateHandValue, determineWinner, isBlackjack, isBust } from "./utils/blackjack";
+import { PlayingCard } from "../types/card";
 import Status from "./components/Status";
 import Score from "./components/Score";
+import { GameStatus } from "./types/game";
+import { calculateHandValue } from "./utils/calculateHandValue";
+import { isBlackjack, isBust, determineWinner } from "./utils/engine";
 
 
-const Game = (): ReactElement => {
+const BlackJack = (): ReactElement => {
   const [playerCards, setPlayerCards] = useState<PlayingCard[]>([]);
   const [dealerCards, setDealerCards] = useState<PlayingCard[]>([]);
   const [deckId, setDeckId] = useState<string | null>(null);
@@ -109,4 +110,4 @@ const Game = (): ReactElement => {
   );
 }
 
-export default Game;
+export default BlackJack;

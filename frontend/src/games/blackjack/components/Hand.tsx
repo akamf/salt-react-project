@@ -1,5 +1,5 @@
-import { PlayingCard } from '../types/card'
-import Card from './Card';
+import { PlayingCard } from '../../types/card'
+import Card from '../../components/Card';
 
 interface HandProps {
   cards: PlayingCard[];

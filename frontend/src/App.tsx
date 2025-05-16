@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import Game from './Game';
+import BlackJack from './games/blackjack/Game';
 
 
 const App = (): ReactElement => {
@@ -8,7 +8,7 @@ const App = (): ReactElement => {
       <h1 className="text-4xl font-extrabold mb-8 text-center uppercase tracking-wider">
         ♠ Blackjack ♣
       </h1>
-      <Game />
+      <BlackJack />
     </div>
   );
 }
