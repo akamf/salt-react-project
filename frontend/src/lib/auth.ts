@@ -12,6 +12,6 @@ export type UserDto = {
 
 export type AuthContext = {
   user: UserDto | null
-  login: (name: string) => void
+  login: (user: UserDto) => void
   logout: () => void
 };
