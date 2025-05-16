@@ -1,11 +1,14 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { useAuth } from '../hooks/useAuth';
+import { z } from 'zod';
 import React, { useState } from 'react';
+import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
+
+import { useAuth } from '../hooks/useAuth';
 import { loginUser } from '../utils/api';
 
 
 const LogIn = () => {
   const navigate = useNavigate();
+  const search = useSearch({ from: '/login' });
   const { login } = useAuth();
 
   const [name, setName] = useState<string>("");
@@ -21,7 +24,7 @@ const LogIn = () => {
       login(user);
 
       setTimeout(() => {
-        navigate({ to: '/' })
+        navigate({ to: search.redirect ?? '/' });
       }, 0);
     } catch (err: any) {
       setError(err.message || "Login Failed");
@@ -59,5 +62,8 @@ const LogIn = () => {
 
 
 export const Route = createFileRoute('/login')({
+  validateSearch: z.object({
+    redirect: z.string().optional(),
+  }),
   component: LogIn,
 });
