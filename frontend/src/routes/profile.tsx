@@ -86,7 +86,7 @@ const Profile = () => {
           className={`w-full py-2 rounded text-white ${
             isFormValid()
               ? 'bg-amber-700 hover:bg-amber-800'
-              : 'bg-gray-400 cursor-not-allowed'
+              : 'bg-amber-700/50 cursor-not-allowed'
           }`}
         >
           Update
@@ -95,12 +95,12 @@ const Profile = () => {
 
       {/* Stats section */}
       <div className="mt-10 bg-gray-100 rounded p-4">
-        <h3 className="text-lg font-semibold mb-2 text-gray-700">🎮 Your Game Stats</h3>
+        <h3 className="text-center text-lg font-semibold mb-8 text-gray-700">🎮 Your Game Stats</h3>
         {user?.gameStats && Object.keys(user.gameStats).length > 0 ? (
           Object.entries(user.gameStats).map(([game, stats]) => (
-            <div key={game} className="mb-4">
-              <h4 className="font-semibold text-gray-800">{game.toUpperCase()}</h4>
-              <ul className="text-sm text-gray-700 list-disc ml-5">
+            <div key={game} className="mb-4 bg-gray-300/80 p-4 rounded shadow">
+              <h4 className="font-semibold text-center text-gray-800">{game.toUpperCase()}</h4>
+              <ul className="text-sm text-gray-700 list-none ml-5">
                 <li>Wins: {stats.wins}</li>
                 <li>Losses: {stats.losses}</li>
                 <li>Ties: {stats.ties}</li>
