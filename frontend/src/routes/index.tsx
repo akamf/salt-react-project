@@ -21,19 +21,13 @@ const Index = () => {
           >
             View Games
           </Link>
-            <Link
-              to="/profile"
-              className="px-6 py-3 bg-zinc-800 hover:bg-zinc-700 rounded text-white text-lg"
-            >
-              See Profile
-            </Link>
-            {/* <Link
-              to="/high-score"
-              className="px-6 py-3 bg-yellow-700 hover:bg-yellow-600 rounded text-white"
-            >
-              See High Score
-            </Link> */}
-          </div>
+          <Link
+            to="/profile"
+            className="px-6 py-3 bg-zinc-800 hover:bg-zinc-700 rounded text-white text-lg"
+          >
+            See Profile
+          </Link>
+        </div>
       )}
     </div>
   );
