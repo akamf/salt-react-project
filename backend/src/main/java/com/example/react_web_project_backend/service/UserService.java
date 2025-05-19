@@ -15,6 +15,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static com.example.react_web_project_backend.utils.GameStatUtils.handleBlackjackStats;
+import static com.example.react_web_project_backend.utils.GameStatUtils.handleTexasStats;
 
 @Service
 public class UserService {
@@ -76,9 +77,8 @@ public class UserService {
         GameStats updated;
 
         switch (update.game()) {
-            case "blackjack" -> {
-                updated = handleBlackjackStats(current, update.outcome());
-            }
+            case "blackjack" -> updated = handleBlackjackStats(current, update.outcome());
+            case "texas"     -> updated = handleTexasStats(current, update.outcome());
             default -> {
                 Map<String, Integer> extras = new HashMap<>(current.extraStats());
                 extras.put(update.outcome(), extras.getOrDefault(update.outcome(), 0) + 1);

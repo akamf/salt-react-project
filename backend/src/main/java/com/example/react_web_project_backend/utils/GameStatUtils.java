@@ -31,4 +31,26 @@ public class GameStatUtils {
             }
         }
     }
+
+    public static GameStats handleTexasStats(GameStats current, String outcome) {
+        Map<String, Integer> extras = new HashMap<>(current.extraStats());
+
+        return switch (outcome) {
+            case "win" -> new GameStats(current.wins() + 1, current.losses(), current.ties(), extras);
+            case "loss" -> new GameStats(current.wins(), current.losses() + 1, current.ties(), extras);
+            case "tie" -> new GameStats(current.wins(), current.losses(), current.ties() + 1, extras);
+            case "fold" -> {
+                extras.put("fold", extras.getOrDefault("fold", 0) + 1);
+                yield new GameStats(current.wins(), current.losses(), current.ties(), extras);
+            }
+            case "all_in" -> {
+                extras.put("all_in", extras.getOrDefault("all_in", 0) + 1);
+                yield new GameStats(current.wins(), current.losses(), current.ties(), extras);
+            }
+            default -> {
+                extras.put(outcome, extras.getOrDefault(outcome, 0) + 1);
+                yield new GameStats(current.wins(), current.losses(), current.ties(), extras);
+            }
+        };
+    }
 }
