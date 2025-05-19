@@ -96,7 +96,7 @@ const BlackJack = (): ReactElement => {
   
 
   return (
-    <div className="max-w-4xl mx-auto bg-green-900 p-6 rounded shadow-xl space-y-6">
+    <div className="w-full max-w-4xl mx-auto bg-green-900 p-6 rounded shadow-xl space-y-6">
       <div className="text-center">
         <h2 className="text-2xl font-semibold mb-2">Dealer</h2>
         <Hand 
