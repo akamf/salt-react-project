@@ -1,7 +1,7 @@
-import React from 'react'
-import { RouterProvider, createRouter } from '@tanstack/react-router'
-import { routeTree } from '../routeTree.gen'
-import { UserDto, AuthContext } from '../utils/auth'
+import { useEffect, useState } from 'react';
+import { RouterProvider, createRouter } from '@tanstack/react-router';
+import { routeTree } from '../routeTree.gen';
+import { UserDto, AuthContext } from '../utils/auth';
 
 const router = createRouter({ routeTree });
 
@@ -12,7 +12,8 @@ declare module '@tanstack/react-router' {
 }
 
 const AuthProvider = () => {
-  const [user, setUser] = React.useState<UserDto | null>(null);
+  const [user, setUser] = useState<UserDto | null>(null);
+  const [isReady, setIsReady] = useState(false);
 
   const login = (user: UserDto) => {
     setUser(user);
@@ -24,15 +25,23 @@ const AuthProvider = () => {
     localStorage.removeItem('user');
   }
 
-  React.useEffect(() => {
-    const stored = localStorage.getItem('user');
-    
-    if (stored) {
-      setUser(JSON.parse(stored));
+   useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+      } catch (error) {
+        console.error("Invalid user in localStorage, clearing...");
+        localStorage.removeItem('user');
+      }
     }
-  }, [])
+    setIsReady(true);
+  }, []);
 
   const context: AuthContext = { user, login, logout };
+
+  if (!isReady) return null;
 
   return <RouterProvider router={router} context={context} />;
 }
