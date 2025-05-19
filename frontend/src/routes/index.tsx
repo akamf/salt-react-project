@@ -4,8 +4,14 @@ import { useAuth } from '../hooks/useAuth';
 const Index = () => {
   const { user } = useAuth();
   return (
-    <div className="text-center mt-10">
-      <h1 className="text-4xl font-bold mb-6">🎲 Welcome to the Game Hub</h1>
+    <div className="text-center px-4">
+      <h1 className="text-4xl font-bold mb-4">🎲 Welcome to the Game Hub</h1>
+
+      <p className="text-lg text-gray-200 mb-8 max-w-xl mx-auto">
+        Take a break, shuffle up, and play a round. Whether you're chasing 21 🃏
+        or just hanging out, Game Hub is your cozy corner for casual card games.
+        More games are coming soon — stay tuned! 💫
+      </p>
       {!user ? (
         <Link
           to="/login"
