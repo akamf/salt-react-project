@@ -29,7 +29,7 @@ const BlackJack = (): ReactElement => {
 
       const drawResponse = await fetch(`https://deckofcardsapi.com/api/deck/${newDeckId}/draw/?count=4`);
       const drawData = await drawResponse.json();
-      const cards = drawData.cards;
+      const { cards } = drawData;
 
       setPlayerCards([cards[0], cards[2]]);
       setDealerCards([cards[1], cards[3]]);
@@ -50,7 +50,9 @@ const BlackJack = (): ReactElement => {
   }
 
   const handleHit = async () => {
-    if (!deckId) return;
+    if (!deckId) {
+      return;
+    }
 
     try {
       const response = await fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`);
@@ -73,7 +75,9 @@ const BlackJack = (): ReactElement => {
   }
 
   const handleStand = async () => {
-    if (!deckId) return;
+    if (!deckId) {
+      return;
+    }
 
     const dealer = [...dealerCards];
 

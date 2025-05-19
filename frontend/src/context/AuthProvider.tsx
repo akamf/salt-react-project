@@ -3,7 +3,10 @@ import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { routeTree } from '../routeTree.gen';
 import { UserDto, AuthContext } from '../utils/auth';
 
-const router = createRouter({ routeTree });
+const router = createRouter({ 
+  routeTree,
+  context: { user: null, login: () => {}, logout: () => {} }
+});
 
 declare module '@tanstack/react-router' {
   interface Register {
@@ -41,10 +44,11 @@ const AuthProvider = () => {
 
   const context: AuthContext = { user, login, logout };
 
-  if (!isReady) return null;
+  if (!isReady) {
+    return null;
+  }
 
   return <RouterProvider router={router} context={context} />;
 }
 
 export default AuthProvider;
-

@@ -17,12 +17,12 @@ const Profile = () => {
   const wantsToChangePassword = oldPassword && newPassword;
 
   const isFormValid = () => {
-    if (!hasNameChanged && !wantsToChangePassword) return false;
+    if (!hasNameChanged && !wantsToChangePassword) {
+      return false;
+    }
 
-    if (wantsToChangePassword) {
-      if (newPassword.length < 6 || !/[a-zA-Z]/.test(newPassword) || !/\d/.test(newPassword)) {
-        return false;
-      }
+    if (wantsToChangePassword && (newPassword.length < 6 || !/[a-zA-Z]/.test(newPassword) || !/\d/.test(newPassword))) {
+      return false;
     }
 
     return true;
@@ -33,7 +33,9 @@ const Profile = () => {
     setError(null);
     setMessage(null);
 
-    if (!user) return;
+    if (!user) {
+      return;
+    }
 
     try {
       const updatedUser = await updateUser({
@@ -106,7 +108,7 @@ const Profile = () => {
                 <li>Ties: {stats.ties}</li>
                 {stats.extraStats &&
                   Object.entries(stats.extraStats).map(([key, value]) => (
-                    <li key={key}>
+                    <li key={`extra-${key}`}>
                       {key}: {value}
                     </li>
                   ))}

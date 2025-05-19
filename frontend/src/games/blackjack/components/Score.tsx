@@ -8,7 +8,9 @@ interface ScoreProps {
 }
 
 const Score = ({ cards, label, revealScore = true }: ScoreProps) => {
-  if (!revealScore) return;
+  if (!revealScore) {
+    return;
+  }
 
   const score: number = calculateHandValue(cards);
 
