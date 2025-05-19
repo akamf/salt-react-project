@@ -17,8 +17,6 @@ const Register = () => {
     e.preventDefault();
     setError("");
 
-    console.log(name, password);
-
     try {
       const user = await addUser(name, password);
       login(user);
