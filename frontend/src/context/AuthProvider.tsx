@@ -28,7 +28,7 @@ const AuthProvider = () => {
     localStorage.removeItem('user');
   }
 
-   useEffect(() => {
+  useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       try {
