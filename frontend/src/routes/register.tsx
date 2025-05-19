@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 
-import { useAuth } from '../hooks/useAuth';
 import { addUser } from '../utils/api';
+import { validateInputs } from '../utils/validation';
 
 
 const Register = () => {
-  const { login } = useAuth();
   const navigate = useNavigate();
 
   const [name, setName] = useState<string>("");
@@ -19,8 +18,9 @@ const Register = () => {
     setError("");
     setSuccess(false);
 
-    if (!name.trim() || !password.trim()) {
-      setError("Username and password cannot be empty");
+    const validationError = validateInputs(name, password);
+    if (validationError) {
+      setError(validationError);
       return;
     }
 
