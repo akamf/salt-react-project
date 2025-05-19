@@ -51,3 +51,28 @@ export const updateStats = async (
     throw new Error(await response.text());
   }
 };
+
+
+export interface UpdateUserPayload {
+  id: string;
+  name: string;
+  oldPassword: string;
+  newPassword?: string;
+}
+
+export const updateUser = async (payload: UpdateUserPayload) => {
+  const response = await fetch(`${API_URL}/update-user`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    const message = await response.text();
+    throw new Error(message);
+  }
+
+  return await response.json();
+};
