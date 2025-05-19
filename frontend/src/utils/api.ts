@@ -39,9 +39,8 @@ export const addUser = async (name: string, password: string) => {
 export const updateStats = async (
   userId: string,
   game: string,
-  outcome: 'win' | 'loss' | 'blackjack' | 'tie'
+  outcome: 'win' | 'lose' | 'blackjack' | 'tie'
 ) => {
-  console.log("Updating stats for user:", userId, game, outcome);
   const response = await fetch(`${API_URL}/users/${userId}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },

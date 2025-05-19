@@ -63,7 +63,7 @@ const BlackJack = (): ReactElement => {
       if (isBust(updatedHand)) {
         setGameStatus(GameStatus.Lose);
         if (user) {
-          const updatedUser = await updateStats(user.id, "blackjack", "loss");
+          const updatedUser = await updateStats(user.id, "blackjack", "lose");
           login(updatedUser);
         }
       }
@@ -115,14 +115,13 @@ const BlackJack = (): ReactElement => {
         />
         <Score cards={playerCards} label={"Player"} />
       </div>
-
       <div className="text-center">
         <Status status={gameStatus} />
         <Controls
           onHit={handleHit}
           onStand={handleStand}
           onNewGame={startNewGame}
-          disabled={gameStatus !== GameStatus.Playing}
+          gameRunning={gameStatus === GameStatus.Playing}
         />
       </div>
     </div>

@@ -15,7 +15,7 @@ public class GameStatUtils {
             case "win" -> {
                 return new GameStats(current.wins() + 1, current.losses(), current.ties(), extras);
             }
-            case "loss" -> {
+            case "lose" -> {
                 return new GameStats(current.wins(), current.losses() + 1, current.ties(), extras);
             }
             case "tie" -> {
