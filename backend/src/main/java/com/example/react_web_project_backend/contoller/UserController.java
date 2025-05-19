@@ -2,6 +2,7 @@ package com.example.react_web_project_backend.contoller;
 
 
 import com.example.react_web_project_backend.dto.GameStatsUpdateDto;
+import com.example.react_web_project_backend.dto.RegisterRequestDto;
 import com.example.react_web_project_backend.dto.UserDto;
 import com.example.react_web_project_backend.exception.InvalidCredentialsException;
 import com.example.react_web_project_backend.model.User;
@@ -37,9 +38,9 @@ public class UserController {
     }
 
     @PostMapping("/add-user")
-    public ResponseEntity<?> addUser(@RequestParam String name, @RequestParam String password) {
+    public ResponseEntity<?> addUser(@RequestBody RegisterRequestDto request) {
         try {
-            User created = userService.addUser(name, password);
+            User created = userService.addUser(request.name(), request.password());
             return ResponseEntity.ok(created);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(409).body(e.getMessage());

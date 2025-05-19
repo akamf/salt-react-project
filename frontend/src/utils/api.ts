@@ -27,7 +27,7 @@ export const addUser = async (name: string, password: string) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, password }),
   });
-
+  
   if (!response.ok) {
     const message = await response.text();
     throw new Error(message || "Registration failed");
