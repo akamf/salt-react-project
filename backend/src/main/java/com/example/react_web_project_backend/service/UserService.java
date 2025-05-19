@@ -1,6 +1,7 @@
 package com.example.react_web_project_backend.service;
 
 import com.example.react_web_project_backend.dto.GameStatsUpdateDto;
+import com.example.react_web_project_backend.dto.UpdateUserRequestDto;
 import com.example.react_web_project_backend.dto.UserDto;
 import com.example.react_web_project_backend.exception.InvalidCredentialsException;
 import com.example.react_web_project_backend.model.GameStats;
@@ -89,5 +90,31 @@ public class UserService {
         gameStatsMap.put(update.game(), updated);
         User updatedUser = new User(user.id(), user.name(), user.password(), gameStatsMap);
         userRepository.save(updatedUser);
+    }
+
+    public User updateUser(UpdateUserRequestDto dto) {
+        UUID id = dto.id();
+
+        if (!userRepository.existsById(id)) {
+            throw new IllegalArgumentException("User not found");
+        }
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        if (!user.password().equals(dto.oldPassword())) {
+            throw new IllegalArgumentException("Incorrect current password");
+        }
+
+        String updatedName = dto.name().trim();
+        if (updatedName.isEmpty()) {
+            throw new IllegalArgumentException("Username cannot be blank");
+        }
+
+        String updatedPassword = dto.newPassword() != null && !dto.newPassword().isBlank()
+                ? dto.newPassword().trim()
+                : user.password();
+
+        return userRepository.save(new User(user.id(), updatedName, updatedPassword, user.gameStats()));
     }
 }

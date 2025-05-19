@@ -3,6 +3,7 @@ package com.example.react_web_project_backend.contoller;
 
 import com.example.react_web_project_backend.dto.GameStatsUpdateDto;
 import com.example.react_web_project_backend.dto.RegisterRequestDto;
+import com.example.react_web_project_backend.dto.UpdateUserRequestDto;
 import com.example.react_web_project_backend.dto.UserDto;
 import com.example.react_web_project_backend.exception.InvalidCredentialsException;
 import com.example.react_web_project_backend.model.User;
@@ -73,6 +74,16 @@ public class UserController {
             return ResponseEntity.ok().build();
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/update-user")
+    public ResponseEntity<?> updateUser(@RequestBody @Valid UpdateUserRequestDto dto) {
+        try {
+            User updated = userService.updateUser(dto);
+            return ResponseEntity.ok(updated);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(400).body(e.getMessage());
         }
     }
 }
