@@ -14,12 +14,12 @@ const BlackJackPage = () => {
 
 export const Route = createFileRoute('/games/blackjack')({
   beforeLoad: ({ context }) => {
-      if (!context.user) {
-        throw redirect({
-          to: '/login',
-          search: { redirect: '/profile' },
-        })
-      }
-    },
+    if (!context.user) {
+      throw redirect({
+        to: '/login',
+        search: { redirect: '/profile' },
+      })
+    }
+  },
   component: BlackJackPage,
 })
