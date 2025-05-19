@@ -41,6 +41,7 @@ export const updateStats = async (
   game: string,
   outcome: 'win' | 'loss' | 'blackjack' | 'tie'
 ) => {
+  console.log("Updating stats for user:", userId, game, outcome);
   const response = await fetch(`${API_URL}/users/${userId}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -50,6 +51,8 @@ export const updateStats = async (
   if (!response.ok) {
     throw new Error(await response.text());
   }
+
+  return await response.json();
 };
 
 

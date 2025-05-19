@@ -70,8 +70,8 @@ public class UserController {
     @PutMapping("/users/{id}")
     public ResponseEntity<?> updateUserStats(@PathVariable UUID id, @RequestBody GameStatsUpdateDto update) {
         try {
-            userService.updateStats(id, update);
-            return ResponseEntity.ok().build();
+            User updated = userService.updateStats(id, update);
+            return ResponseEntity.ok(updated);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }

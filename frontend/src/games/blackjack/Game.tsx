@@ -8,9 +8,13 @@ import Score from "./components/Score";
 import { GameStatus } from "./types/game";
 import { calculateHandValue } from "./utils/calculateHandValue";
 import { isBlackjack, isBust, determineWinner } from "./utils/engine";
+import { useAuth } from "../../hooks/useAuth";
+import { updateStats } from "../../utils/api";
 
 
 const BlackJack = (): ReactElement => {
+  const { user, login } = useAuth();
+
   const [playerCards, setPlayerCards] = useState<PlayingCard[]>([]);
   const [dealerCards, setDealerCards] = useState<PlayingCard[]>([]);
   const [deckId, setDeckId] = useState<string | null>(null);
@@ -32,6 +36,10 @@ const BlackJack = (): ReactElement => {
 
       if (isBlackjack([cards[0], cards[2]])) {
         setGameStatus(GameStatus.Blackjack);
+        if (user) {
+          const updatedUser = await updateStats(user.id, "blackjack", "blackjack");
+          login(updatedUser);
+        }
         return;
       }
 
@@ -52,8 +60,13 @@ const BlackJack = (): ReactElement => {
       const updatedHand = [...playerCards, newCard];
       setPlayerCards(updatedHand);
 
-      if (isBust(updatedHand)) setGameStatus(GameStatus.Lose);
-
+      if (isBust(updatedHand)) {
+        setGameStatus(GameStatus.Lose);
+        if (user) {
+          const updatedUser = await updateStats(user.id, "blackjack", "loss");
+          login(updatedUser);
+        }
+      }
     } catch (error) {
       console.error('Failed to draw card:', error);
     }
@@ -72,7 +85,13 @@ const BlackJack = (): ReactElement => {
     }
 
     setDealerCards(dealer);
-    setGameStatus(determineWinner(playerCards, dealer));
+    const result = determineWinner(playerCards, dealer);
+    setGameStatus(result);
+    
+    if (user) {
+      const updatedUser = await updateStats(user.id, "blackjack", result.toLowerCase() as any);
+      login(updatedUser);
+    }
   }
   
 

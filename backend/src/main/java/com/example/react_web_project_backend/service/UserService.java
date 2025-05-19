@@ -61,7 +61,7 @@ public class UserService {
                 .orElseThrow(() -> new InvalidCredentialsException("User not found"));
     }
 
-    public void updateStats(UUID id, GameStatsUpdateDto update) {
+    public User updateStats(UUID id, GameStatsUpdateDto update) {
         if (!userRepository.existsById(id)) {
             throw new IllegalArgumentException("User not found");
         }
@@ -90,6 +90,7 @@ public class UserService {
         gameStatsMap.put(update.game(), updated);
         User updatedUser = new User(user.id(), user.name(), user.password(), gameStatsMap);
         userRepository.save(updatedUser);
+        return updatedUser;
     }
 
     public User updateUser(UpdateUserRequestDto dto) {
