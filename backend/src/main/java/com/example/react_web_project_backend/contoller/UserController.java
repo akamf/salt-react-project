@@ -8,11 +8,13 @@ import com.example.react_web_project_backend.exception.InvalidCredentialsExcepti
 import com.example.react_web_project_backend.model.User;
 import com.example.react_web_project_backend.service.UserService;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -38,12 +40,14 @@ public class UserController {
     }
 
     @PostMapping("/add-user")
-    public ResponseEntity<?> addUser(@RequestBody RegisterRequestDto request) {
+    public ResponseEntity<?> addUser(@RequestBody @Valid RegisterRequestDto dto) {
         try {
-            User created = userService.addUser(request.name(), request.password());
+            User created = userService.addUser(dto.name().trim(), dto.password().trim());
             return ResponseEntity.ok(created);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(409).body(e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(Map.of("message", "Username is already taken. Please choose another one."));
         }
     }
 

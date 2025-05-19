@@ -29,7 +29,7 @@ export const addUser = async (name: string, password: string) => {
   });
   
   if (!response.ok) {
-    const message = await response.text();
+    const { message } = await response.json();
     throw new Error(message || "Registration failed");
   }
 

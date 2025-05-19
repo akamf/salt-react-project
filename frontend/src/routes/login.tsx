@@ -53,7 +53,7 @@ const LogIn = () => {
         className="w-full mb-4 p-2 border rounded"
       />
 
-      <button type="submit" className="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-2 rounded">
+      <button type="submit" className="w-full bg-amber-700 hover:bg-amber-800 text-white py-2 rounded">
         Log In
       </button>
     </form>

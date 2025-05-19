@@ -12,19 +12,27 @@ const Register = () => {
   const [name, setName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const [success, setSuccess] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setSuccess(false);
+
+    if (!name.trim() || !password.trim()) {
+      setError("Username and password cannot be empty");
+      return;
+    }
 
     try {
-      const user = await addUser(name, password);
-      login(user);
+      await addUser(name, password);
+      setSuccess(true);
+
       setTimeout(() => {
-        navigate({ to: '/' });
-      }, 0);
+        navigate({ to: '/login' });
+      }, 3000);
     } catch (err: any) {
-      setError(err.message || "Registration failed");
+      setError(err.message || "Registration failed, try again later");
     }
   };
 
@@ -47,9 +55,20 @@ const Register = () => {
         onChange={(e) => setPassword(e.target.value)}
         className="w-full mb-4 p-2 border rounded"
       />
-      <button type="submit" className="w-full bg-amber-700 hover:bg-amber-800 text-white py-2 rounded">
-        Register
-      </button>
+      {success ? (
+        <p className="text-green-800 text-center font-medium">
+          Registration successful!✅
+          <br/>
+          Redirecting to login...
+        </p>
+      ) : (
+        <button
+          type="submit"
+          className="w-full bg-amber-700 hover:bg-amber-800 text-white py-2 rounded"
+        >
+          Register
+        </button>
+      )}
     </form>
   );
 }
