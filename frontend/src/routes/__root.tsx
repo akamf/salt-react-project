@@ -46,7 +46,7 @@ const RootComponent = () => {
             <>
               <Link to="/games" className="hover:underline">Games</Link>
               <Link to="/profile" className="hover:underline">Profile</Link>
-              <button onClick={handleLogout} className="underline">Log Out</button>
+              <button onClick={handleLogout} className="hover:underline">Log Out</button>
             </>
           )}
         </nav>
@@ -64,7 +64,7 @@ const RootComponent = () => {
             <>
               <Link to="/games" onClick={() => setMenuOpen(false)}>Games</Link>
               <Link to="/profile" onClick={() => setMenuOpen(false)}>Profile</Link>
-              <button onClick={handleLogout} className="underline">Log Out</button>
+              <button onClick={handleLogout}>Log Out</button>
             </>
           )}
         </div>

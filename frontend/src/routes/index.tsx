@@ -5,7 +5,7 @@ const Index = () => {
   const { user } = useAuth();
   return (
     <div className="text-center mt-10">
-      <h1 className="text-4xl font-bold mb-6">🎲 Welcome to the Game Lounge</h1>
+      <h1 className="text-4xl font-bold mb-6">🎲 Welcome to the Game Hub</h1>
       {!user ? (
         <Link
           to="/login"
