@@ -2,6 +2,7 @@ package com.example.react_web_project_backend.repository;
 
 
 import com.example.react_web_project_backend.model.User;
+import com.example.react_web_project_backend.utils.InitialUserLoader;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
@@ -9,6 +10,10 @@ import java.util.*;
 @Repository
 public class UserRepository {
     private final Map<UUID, User> usersDB = new HashMap<>();
+
+    public UserRepository() {
+        InitialUserLoader.loadInitialUsers(this);
+    }
 
     public List<User> findAll() {
         return new ArrayList<>(usersDB.values());
