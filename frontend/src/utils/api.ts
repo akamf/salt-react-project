@@ -76,5 +76,12 @@ export const updateUser = async (payload: UpdateUserPayload) => {
     throw new Error(message);
   }
 
-  return await response.json();
+  const user = await response.json();
+
+  return {
+    id: user.id,
+    name: user.name,
+    token: user.token,
+    gameStats: user.gameStats, 
+  };
 };
