@@ -1,4 +1,5 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
+import TexasHoldem from '../../games/texasholdem/Game';
 
 function TexasHoldemPage() {
   return (
@@ -6,7 +7,7 @@ function TexasHoldemPage() {
       <h1 className="text-4xl font-extrabold mb-8 text-center uppercase tracking-wider">
         ♠ Texas Hold'em ♣
       </h1>
-      {/* <TexasHoldem /> */}
+      <TexasHoldem />
     </>
   );
 }
