@@ -4,8 +4,8 @@ import jakarta.validation.constraints.NotBlank;
 import java.util.UUID;
 
 public record UpdateUserRequestDto(
-        @NotBlank UUID id,
-        @NotBlank String name,
+        @NotBlank Long id,
+        @NotBlank String username,
         @NotBlank String oldPassword,
         String newPassword
 ) {}
