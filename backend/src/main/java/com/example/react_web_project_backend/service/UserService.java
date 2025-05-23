@@ -1,14 +1,12 @@
 package com.example.react_web_project_backend.service;
 
-import com.example.react_web_project_backend.dto.GameStatsUpdateDto;
-import com.example.react_web_project_backend.dto.LogInRequestDto;
-import com.example.react_web_project_backend.dto.UpdateUserRequestDto;
-import com.example.react_web_project_backend.dto.LoggedInUserDto;
+import com.example.react_web_project_backend.dto.*;
 import com.example.react_web_project_backend.exception.InvalidCredentialsException;
 import com.example.react_web_project_backend.model.User;
 import com.example.react_web_project_backend.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -51,8 +49,11 @@ public class UserService {
                     if (!user.getPassword().equals(dto.password())) {
                         throw new InvalidCredentialsException("Wrong password");
                     }
+                    LocalDateTime timestamp = LocalDateTime.now();
+                    user.setLastLogin(timestamp);
+                    userRepository.save(user);
                     String token = UUID.randomUUID().toString();
-                    return new LoggedInUserDto(user.getId(), user.getUsername(), token);
+                    return new LoggedInUserDto(user.getId(), user.getUsername(), token, timestamp);
                 })
                 .orElseThrow(() -> new InvalidCredentialsException("User not found"));
     }
