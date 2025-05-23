@@ -10,9 +10,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-//
-//import static com.example.react_web_project_backend.utils.GameStatUtils.handleBlackjackStats;
-//import static com.example.react_web_project_backend.utils.GameStatUtils.handleTexasStats;
 
 @Service
 public class UserService {
@@ -56,42 +53,6 @@ public class UserService {
                     return new LoggedInUserDto(user.getId(), user.getUsername(), token, timestamp);
                 })
                 .orElseThrow(() -> new InvalidCredentialsException("User not found"));
-    }
-
-    public User updateStats(Long id, GameStatsUpdateDto update) {
-        if (!userRepository.existsById(id)) {
-            throw new IllegalArgumentException("User not found");
-        }
-
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));;
-//        Map<String, GameStats> gameStatsMap = new HashMap<>(user.gameStats());
-
-//        GameStats current = gameStatsMap.getOrDefault(
-//            update.game(),
-//            new GameStats(0, 0, 0, new HashMap<>())
-//        );
-//
-//        GameStats updated;
-//
-//        switch (update.game()) {
-//            case "blackjack" -> updated = handleBlackjackStats(current, update.outcome());
-//            case "texas"     -> updated = handleTexasStats(current, update.outcome());
-//            default -> {
-//                Map<String, Integer> extras = new HashMap<>(current.extraStats());
-//                extras.put(update.outcome(), extras.getOrDefault(update.outcome(), 0) + 1);
-//                updated = new GameStats(current.wins(), current.losses(), current.ties(), extras);
-//            }
-//        }
-//
-//        gameStatsMap.put(update.game(), updated);
-        User updatedUser = new User(
-                user.getId(),
-                user.getUsername(),
-                user.getPassword()
-        );
-        userRepository.save(updatedUser);
-        return updatedUser;
     }
 
     public User updateUser(UpdateUserRequestDto dto) {
