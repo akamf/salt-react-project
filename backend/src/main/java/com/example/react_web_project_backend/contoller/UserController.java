@@ -1,10 +1,7 @@
 package com.example.react_web_project_backend.contoller;
 
 
-import com.example.react_web_project_backend.dto.GameStatsUpdateDto;
-import com.example.react_web_project_backend.dto.RegisterRequestDto;
-import com.example.react_web_project_backend.dto.UpdateUserRequestDto;
-import com.example.react_web_project_backend.dto.UserDto;
+import com.example.react_web_project_backend.dto.*;
 import com.example.react_web_project_backend.exception.InvalidCredentialsException;
 import com.example.react_web_project_backend.model.User;
 import com.example.react_web_project_backend.service.UserService;
@@ -16,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -34,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable UUID id) {
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
         return userService.getUserById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -43,7 +39,8 @@ public class UserController {
     @PostMapping("/add-user")
     public ResponseEntity<?> addUser(@RequestBody @Valid RegisterRequestDto dto) {
         try {
-            User created = userService.addUser(dto.name().trim(), dto.password().trim());
+            User user = RegisterRequestDto.userFromDto(dto);
+            User created = userService.addUser(user);
             return ResponseEntity.ok(created);
         } catch (IllegalArgumentException e) {
             return ResponseEntity
@@ -53,9 +50,10 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestParam String name, @RequestParam String password) {
+    public ResponseEntity<?> login(@RequestBody @Valid LogInRequestDto dto) {
+        // TODO: LoggedInUserDto should be added to cookie through AuthController
         try {
-            UserDto user = userService.login(name, password);
+            LoggedInUserDto user = userService.login(dto);
             return ResponseEntity.ok(user);
         } catch (InvalidCredentialsException e) {
             return ResponseEntity.status(401).body(e.getMessage());
@@ -63,12 +61,12 @@ public class UserController {
     }
 
     @DeleteMapping("/delete-user/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         return userService.deleteUser(id) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 
     @PutMapping("/users/{id}")
-    public ResponseEntity<?> updateUserStats(@PathVariable UUID id, @RequestBody GameStatsUpdateDto update) {
+    public ResponseEntity<?> updateUserStats(@PathVariable Long id, @RequestBody GameStatsUpdateDto update) {
         try {
             User updated = userService.updateStats(id, update);
             return ResponseEntity.ok(updated);
